@@ -146,7 +146,7 @@ la función `data.frame()`.
 
 Por ejemplo, crear un marco de datos con los vectores `edad`, `deporte`, `comic_fav` definidos anteriormente.
 ```r
-mi_marco = data.frame(edad, deporte, comic_fav)
+mi_marco <- data.frame(edad, deporte, comic_fav)
 ```
 
 #### Extraer elementos de un marco de datos (*data frame*)
