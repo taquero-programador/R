@@ -157,3 +157,25 @@ Por ejemplo, para extrar la columna `deporte` del *data frame* `mi_marco` como u
 ```r
 mi_marco$deporte
 ```
+Otra manera de obtener los datos de `deporte` es indicar el número de columna:
+```r
+mi_marco[,2] # retorna una fila
+mi_marco[2] # retorna una columna
+```
+Usar el nombre de la columna y doble corchete para acceder a los valores:
+```r
+mi_marco[["deporte"]] # retorna una fila
+mi_marco["deporte"] # retorna una columna
+```
+Para extrar las columnas `deporte` y `edad`:
+```r
+mi_marco[c("deporte", "edad")]
+# or
+mi_marco[c(2,1)]
+```
+Para obtener las posiciones de 2 hasta la 4 de la columna `edad`:
+```r
+mi_marco[2:4, 1]
+```
+
+#### Extraer subconjuntos de un marco de datos
