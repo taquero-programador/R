@@ -144,7 +144,7 @@ con información de diferente tipo (numérica, alfanumérica o lógica) en un mi
 restricción es que los vectores deben tener la misma longitud. Para crear un marco de datos se usa
 la función `data.frame()`.
 
-Por ejemplo, crear un marco de datos con los vectores `edad`, `deporte`, `comic_fav` definidos anteriormente.
+Por ejemplo, crear un marco de datos con los vectores `edad`, `deporte` y `comic_fav` definidos anteriormente.
 ```r
 mi_marco <- data.frame(edad, deporte, comic_fav)
 ```
