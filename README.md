@@ -27,7 +27,7 @@ help("seq")
 
 ## Vignettes
 Los paquetes de R están obligados a incluir documentación sobre sus funciones y conjuntos de datos.
-Sin embargo, a veces es dificil entender la utilidad de un paquete...
+Sin embargo, a veces es difícil entender la utilidad de un paquete...
 
 ## Variables
 Ejemplos de cómo declarar variables:
@@ -41,6 +41,77 @@ pais <- "Mujico"
 nchar(pais) # retorna el número de letras en la variable
 pais # retorna el valor de la variable
 ```
+
+## Tipos de datos
+En R los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares
+que lo distinguen de los demás. Entre otras cosas, algunas operaciones solo se pueden
+realizar con tipos de datos específicos.
+
+#### Datos más comunes
+Los tipos de datos más común en R son los siguientes:
+Tipo | Ejemplo | Nombre en inglés
+-|-|-
+Entero | `1` | integer
+Numérico | `1.3` | numeric
+Cadena de texto | `"uno"` | character
+Factor | `uno` | factor
+Lógico | `TRUE` | logical
+Perdido | `NA` | NA
+Vacío | `NULL` | null
+
+Además de estos tipos, R también cuenta con datos numéricos complejos (con una parte real y
+una imaginaria), `raw` (bytes), fechas y raster, etc. Estos tipos tienen aplicaciones muy específicas,
+por ejemplo, los datos de tipo fechas son ampliamente usados en economía para analísis de series de tiempo.
+
+#### Entero y numérico
+Como su nombre lo indica, los datos enteros representan números enteros, sin una parte decimal o fraccionaria.
+
+Los datos numéricos representan números, a diferencia de los datos enteros es que tienen
+una parte decimal o fraccionaria.
+
+Los datos numéricos también son llamados *float* (flotante).
+
+#### Factor
+un factor es un tipo de datos específico de R. Puede ser descrito como un dato numérico
+representado por una etiqueta.
+
+Supongamos que tenemos un conjunto de datos que representa el sexo de personas encuestadas
+por teléfono, pero estos se encuentran capturados por los números `1` y `2`. El 1 corresponde a **femenino** y el 2 a **masculino**.
+
+Podemos indicar en consola y para otros analísis, que muestre los 1 como `femenino` y los 2 como `masculinos`.
+
+Por último, cada una de las etiquetas o valores que pueden asumir un factor se conococen como **nivel**.
+En el caso de `femenino` y `masculino`, serían dos niveles.
+
+#### Lógico
+Los datos de tipo lógico solo tiene dos valores posibles: `TRUE` (verdadero) y `FALSE` (falso).
+
+#### `NA` y `NULL`
+En R, usamos `NA` para representar datos perdidos, mientras que `NULL` representa la ausencia de datos.
+
+La diferencia entre las dos es que, un dato `NULL` aparece solo cuando R intents recuperar un dato
+y no encuentra nada, mientras que `NA` es usado para representar explícitamente datos perdidos,
+omitidos o que por alguna razón son faltantes.
+
+## Coerción
+En R los datos pueden ser cuercionados, es decir, forzados para ser transformados de un tipo a otro.
+
+La coerción es muy importante. Cuando pedimos a R relizar alguna operación, intentará coercionar
+de manera implícita, sin avisarnos, los datos de su tipo original al tipo correcto que permita relizarla.
+Habra ocasiones en las que R tenga éxito y la operación ocurra sin problemas, y otras en
+las que falle y obtengamos un error.
+
+La coerción de tipos se reliza de los datos más restrictivos a los más flexibles.
+
+Las coerciones ocurren en el siguiente orden:
+'''r
+lógico -> entero -> numérico -> cadena de texto
+'''
+
+#### Coerción explícita con `as()`
+
+Función | Tipo al que hace coerción
+-|-
 
 ## Vectores
 Los vectores son arreglos ordenados en los cuakes se pueden almacenar información numérico
