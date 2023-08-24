@@ -108,15 +108,41 @@ las que falle y obtengamos un error.
 La coerción de tipos se reliza de los datos más restrictivos a los más flexibles.
 
 Las coerciones ocurren en el siguiente orden:
-
-'''r
+```r
 lógico -> entero -> numérico -> cadena de texto
-'''
+```
 
 #### Coerción explícita con `as()`
 
 Función | Tipo al que hace coerción
 -|-
+`as.integer()` | Entero
+`as.numeric(``)` | Numérico
+`as.character()` | Cadena de texto
+`as.factor()` | Factor
+`as.logical()` | Lógico
+`as.null()` | `NULL`
+
+Todas estas funciones aceptan como argumento datos o vectores.
+
+## Verificar el tipo de un dato
+Se puede usar la función `class()`.
+
+#### Verificar con la función `is()`
+
+Función | Tipo que verifica
+-|-
+`is.integer()` | Entero
+`is.numeric()` | Numérico
+`is.character()` | Cadena de texto
+`is.factor()` | Factor
+`is.logical()` | Lógico
+`is.na()` | `NA`
+`is.null` | `NULL`
+
+Estas funciones toman como argumento un dato.
+
+
 
 ## Vectores
 Los vectores son arreglos ordenados en los cuakes se pueden almacenar información numérico
