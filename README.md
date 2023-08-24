@@ -23,6 +23,10 @@ La última parte de la ayuda es muy interesante, pues incluye ejemplos de uso de
 example(seq)
 # para obtener información más detallada
 help("seq")
+typeof(obj) # retorna el tipo de dato del objeto
+class(obj) # retorna el tipo (array, matrix, dataframe, etc.)
+attributes(obj) # retorna los nombres de columnas, clase y nombre de filas
+names(obj) # retorna el nombre de las columnas del objeto
 ```
 
 ## Vignettes
@@ -139,7 +143,7 @@ miarray[, 3, ]
 ```
 
 ## Marco de datos
-El marco de datos o *data frame* es uno de los objetos más utilizados porque permite agrupar vectores
+El marco de datos o *dataframe* es uno de los objetos más utilizados porque permite agrupar vectores
 con información de diferente tipo (numérica, alfanumérica o lógica) en un mismo objeto, la única
 restricción es que los vectores deben tener la misma longitud. Para crear un marco de datos se usa
 la función `data.frame()`.
@@ -149,11 +153,11 @@ Por ejemplo, crear un marco de datos con los vectores `edad`, `deporte` y `comic
 mi_marco <- data.frame(edad, deporte, comic_fav)
 ```
 
-#### Extraer elementos de un marco de datos (*data frame*)
-Para recuperar la columnas en un *data frame* se puede usar el operador `$` (frame$col_name [vector]),
+#### Extraer elementos de un marco de datos (*dataframe*)
+Para recuperar la columnas en un *dataframe* se puede usar el operador `$` (frame$col_name [vector]),
 corchetes simples `[]` (frame[int] [columna]) o corchetes dobles `[[]]` (frame[["col_name"]] [vector]).
 
-Por ejemplo, para extrar la columna `deporte` del *data frame* `mi_marco` como un vector:
+Por ejemplo, para extrar la columna `deporte` del *dataframe* `mi_marco` como un vector:
 ```r
 mi_marco$deporte
 ```
@@ -179,3 +183,87 @@ mi_marco[2:4, 1]
 ```
 
 #### Extraer subconjuntos de un marco de datos
+Para extraer partes de un marco de datos se puede usar la función `subset(x, subset, select)`. El
+parámetro `x` sirve para indicar el marco de datos, `subset` permite indicar una condición y
+`select` permite filtar las columnas.
+
+Acceder a todos los registros dentro del *dataframe* solo si `deporte` es `TRUE`:
+```r
+subset(mi_marco, subset=deporte == TRUE)
+```
+Obtener los valores cuando `edad` sea mayor o igual a `17`:
+```r
+subset(mi_marco, subset=edad >= 17)
+```
+Obtener la columna `deporte` y `comic_fav` de las personas menores `20`:
+```r
+subset(mi_marco, subset=edad <20, select=c('deporte', 'comic_fav'))
+```
+Obtener todos los datos de `mi_marco` con las personas menores de `20` y que es `TRUE` en `deporte`:
+```r
+subset(mi_marco, subset=edad < 20 & deporte == TRUE)
+```
+#### Leer una base de datos (url)
+De esta base extraer un subconjunto que contenga `edad`, `peso`, `altura` y `sexo`, de aquellos que
+midan más de 185 cm y con un peso mayor a 80 kg.
+```r
+url <- 'https://raw.githubusercontent.com/fhernanb/datos/master/medidas_cuerpo'
+dt1 <- read.table(url, header=TRUE)
+dim(dt1) # retorna la dimensión de la base [1] 36 (filas) 6 (columnas)
+
+dt2 <- subset(x=dt1, subset=altura > 185 & peso > 80, select=c('sexo', 'edad', 'peso', 'altura'))
+dt2 # retorna el nuevo subconjunto
+```
+
+## Listas
+Las listas son otro tipo de objeto muy usado para almacenar objetos de diferente tipo. La sintaxis
+para crear una lista es `list()`.
+
+Para crear una lista que contenga tres objetos: un vector con 5 números de nombre `mi_vector`, una
+matriz de dimensiión 6x4 de 12 números positivos llamada `mi_matriz2` y el *dataframe* `mi_marco`.
+```r
+set.seed(12345)
+mi_vector <- runif(n=5)
+mi_matriz2 <- matrix(data=1:12, ncol=6)
+mi_lista <- list(E1=mi_vector, E2=mi_matriz2, E3=mi_marco)
+```
+La función `set.seed()` permite fijar la semilla de tal manera que los números aleateorios generados
+por la segunda línea en `runif()` sean siempre los mismos. Para la creación de la lista se pasan `E1`, `E2` y `E3` como argumentos y nombres especiales para cada uno de los elementos.
+
+#### Extraer elementos de una lista
+Para recuperar elementos de una lista se puede usar `$`, `[]` o `[[]]`.
+
+Para acceder a la matriz almanecada con el nombre de `E2` dentro del objeto `mi_lista`:
+```r
+mi_lista$E2
+mi_lista[[2]] # indicar la posición del objeto en lugar del nombre
+```
+Usemos `class()` para ver la diferencia entre estos dos objetos:
+```r
+class(mi_lista$E2) # "matrix" "array"
+class(mi_lista[[2]]) # "matrix" "array"
+class(mi_lista[2]) # "list"
+```
+> Al manipular una lista con `$` y `[[]]` se obtienen los objetos almacenados, con `[]` se obtiene una lista.
+
+```r
+# vector con las primera 20 letras en mayúsculas
+v1 <- c(LETTERS[1:20])
+# matriz de 10x10 con 100 números positivos
+m1 <- matrix(data=1:100, rcol=10, ncol=10)
+# matriz de identidad de 3x3
+mi1 <- matrix(data=diag(3), 3,3) # or diag(3)
+# lista con los 3 objetos anteriores
+l1 <- list(a=v1, b=m1, c=mi1)
+# crear un dataframe con 3 vectores (edad, música y relación)
+edad <- c(29, 39, 30)
+music <- c('rock', 'romantica', 'varios')
+rel_stable <- c(TRUE, FALSE, TRUE)
+df1 <- data.frame(edad, music, rel_stable)
+# ¿Cuál es el error en la cración del siguiente dataframe?
+matrix(edad, deporte, comic_fav)
+# solución
+matrix(data=c(edad, deporte, comic_fav), 3,5)
+# o crear un dataframe
+data.frame(edad, deporte, comic_fav)
+```
