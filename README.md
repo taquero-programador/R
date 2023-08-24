@@ -260,10 +260,76 @@ edad <- c(29, 39, 30)
 music <- c('rock', 'romantica', 'varios')
 rel_stable <- c(TRUE, FALSE, TRUE)
 df1 <- data.frame(edad, music, rel_stable)
-# ¿Cuál es el error en la cración del siguiente dataframe?
+# ¿Cuál es el error?
 matrix(edad, deporte, comic_fav)
 # solución
 matrix(data=c(edad, deporte, comic_fav), 3,5)
 # o crear un dataframe
 data.frame(edad, deporte, comic_fav)
+```
+
+## Guía de estilo
+
+#### Nombres de los archivos
+Se suguiere que el nombre usado para nombrar los archivos tenga sentido y que termine con la
+extensión `.R`.
+
+#### Nombre de los objetos
+Se recomienda usar `_` dentro de los nombre de objetos. Puede comensar por una letra o punto. Si
+comienza por punto, el siguiente carácter no puede ser un número.
+
+...
+
+## Usando la consola
+La función `readline` sirve para escribir un mensaje en la consola y solicitar al usuario una
+información que luego se pueda utilizar para realizar alguna operación.
+
+```r
+my_name <- readline(prompt="Ingrese su nombre: ")
+my_age <- readline(promt="Ingrese su edad: ")
+my_age <- as.integer(my_age) # convierte el carácter a entero
+# or
+my_age <- as.integer(readline(prompt="Ingrese su edad: "))
+print(paste("Hola,", my_name,
+    "el año siguiente tendras",
+    my_age + 1,
+    "años de edad."))
+```
+
+#### Usando ventanas emergentes con `svDialogs`
+El paquete `svDialogs` se puede usar para crear ventanas emergentes con un mensaje y solicitar
+información.
+
+Este ejemplo hace lo mismo que el anterior, pero lanza una ventana emergentes usando `svDialogs`:
+```r
+install.packages("svDialogs") # instala el paquete
+library(svDialogs) # para usar el paquete
+
+my_name <- dlgInput(message="Ingrese su nombre: ")$res
+my_age <- dlgInput(message="Ingrese su edad: ")$res
+my_age <- as.integer(my_age)
+print(paste("Hola,", my_name,
+    "el año siguiente tendras",
+    my_age + 1,
+    "años de edad."))
+```
+
+#### Botones para responder
+La función `winDialog` del paquete *utils* sirve para crear botones de diálogo (solo en Windows).
+```r
+library(utils)
+
+winDialog(type="ok", message="¿Ve el mensaje?")
+winDialog(type="okcancel", message="Dos opciones") # muestra dos botones
+winDialog(type="yesno", message="Dos opciones")
+winDialog(type="yesnocancel", message="Tres opciones") # muestra tres botones
+
+# usar condición, ejemplo:
+answer <- winDialog(type="yesno", mess="Elige una opción")
+if(answer) {
+    print('Excelente!')
+}
+else {
+    print('Lastima')
+}
 ```
