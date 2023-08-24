@@ -108,6 +108,7 @@ las que falle y obtengamos un error.
 La coerción de tipos se reliza de los datos más restrictivos a los más flexibles.
 
 Las coerciones ocurren en el siguiente orden:
+
 '''r
 lógico -> entero -> numérico -> cadena de texto
 '''
