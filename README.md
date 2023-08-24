@@ -117,7 +117,7 @@ lógico -> entero -> numérico -> cadena de texto
 Función | Tipo al que hace coerción
 -|-
 `as.integer()` | Entero
-`as.numeric(``)` | Numérico
+`as.numeric()` | Numérico
 `as.character()` | Cadena de texto
 `as.factor()` | Factor
 `as.logical()` | Lógico
@@ -133,7 +133,7 @@ Se puede usar la función `class()`.
 Función | Tipo que verifica
 -|-
 `is.integer()` | Entero
-`is.numeric()` | Numérico
+`is.numeric` | Numérico
 `is.character()` | Cadena de texto
 `is.factor()` | Factor
 `is.logical()` | Lógico
