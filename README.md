@@ -82,7 +82,7 @@ representado por una etiqueta.
 Supongamos que tenemos un conjunto de datos que representa el sexo de personas encuestadas
 por teléfono, pero estos se encuentran capturados por los números `1` y `2`. El 1 corresponde a **femenino** y el 2 a **masculino**.
 
-Podemos indicar en consola y para otros analísis, que muestre los 1 como `femenino` y los 2 como `masculinos`.
+Podemos indicar en consola y para otros analísis, que muestre los 1 como `femenino` y los 2 como `masculino`.
 
 Por último, cada una de las etiquetas o valores que pueden asumir un factor se conococen como **nivel**.
 En el caso de `femenino` y `masculino`, serían dos niveles.
@@ -227,7 +227,7 @@ Tabla con las principales estructuras de control en R.
 
 Dimensiones | Homogeneas | Heterogeneas
 -|-|-
-1 | Vectore | Lista
+1 | Vector | Lista
 2 | Matriz | Data Frame
 3 | array |
 
@@ -236,6 +236,7 @@ Los vectores son arreglos ordenados en los cuakes se pueden almacenar informaci�
 (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (`TRUE` o `FALSE`), pero no
 mezclas de estos. La función en R para crear una vector es `c()` y que significa concatenar; dentro
 de los paréntesis de esta función se ubica la información a almacenar. Ejemplo:
+
 Verificar que el `3` es un vector:
 ```r
 is.vector(3) # TRUE
