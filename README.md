@@ -517,6 +517,7 @@ data.frame(edad, deporte, comic_fav)
 También se puede usar la función `as()` en las estructuras de datos:
 
 Función | Coerciona a | Coerciona exitosamente 
+-|-|-
 `as.vector()` | Vector | Matriz
 `as.matrix()` | Matriz | Vectores, Data frames
 `as.data.frame()` | Data frame | Vectores, Matrices
