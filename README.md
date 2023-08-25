@@ -47,7 +47,7 @@ pais # retorna el valor de la variable
 ```
 
 ## Tipos de datos
-En R los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares
+En R, los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares
 que lo distinguen de los demás. Entre otras cosas, algunas operaciones solo se pueden
 realizar con tipos de datos específicos.
 
@@ -98,7 +98,7 @@ y no encuentra nada, mientras que `NA` es usado para representar explícitamente
 omitidos o que por alguna razón son faltantes.
 
 ## Coerción
-En R los datos pueden ser cuercionados, es decir, forzados para ser transformados de un tipo a otro.
+En R, los datos pueden ser cuercionados, es decir, forzados para ser transformados de un tipo a otro.
 
 La coerción es muy importante. Cuando pedimos a R relizar alguna operación, intentará coercionar
 de manera implícita, sin avisarnos, los datos de su tipo original al tipo correcto que permita relizarla.
@@ -152,7 +152,7 @@ Existen operadores específicos para cada tipo de tarea. Los operadores principa
 - De asignación
 
 #### Operadores aritméticos
-En R tenemos los siguientes operadores aritméticos:
+En R, tenemos los siguientes operadores aritméticos:
 
 Operador | Operación | Ejemplo | Resultado
 -|-|-|-
@@ -173,7 +173,7 @@ Operador | Comparación | Ejemplo | resultado
 `<` | Menor que | `5 < 3` | `FALSE`
 `<=` | Menor o igual que | `5 <= 3` | `FALSE`
 `>` | Mayor que | `5 > 3` | `TRUE`
-`>=` | Maypr o igual que | `5 >= 3` | `TRUE`
+`>=` | Mayor o igual que | `5 >= 3` | `TRUE`
 `==` | Exactamente igual que | `5 == 3` | `FALSE`
 `!=` | No es igual que | `5 != 3` | `TRUE`
 
@@ -220,11 +220,31 @@ Orden | Operadores
 
 Si deseamos que una operación ocurra antes que otra, rompiendo el orden, usamos paréntesis.
 
+## Estructura de datos
+Las estructuras de datos son objetos que contienen datos.
+
+Tabla con las principales estructuras de control en R.
+
+Dimensiones | Homogeneas | Heterogeneas
+-|-|-
+1 | Vectore | Lista
+2 | Matriz | Data Frame
+3 | array |
+
 ## Vectores
 Los vectores son arreglos ordenados en los cuakes se pueden almacenar información numérico
 (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (`TRUE` o `FALSE`), pero no
 mezclas de estos. La función en R para crear una vector es `c()` y que significa concatenar; dentro
 de los paréntesis de esta función se ubica la información a almacenar. Ejemplo:
+Verificar que el `3` es un vector:
+```r
+is.vector(3) # TRUE
+```
+Usar la función `length()` para conocer el largo de un vector:
+```r
+length(3)
+```
+
 ```r
 edad <- c(15, 19, 13, NA, 20)
 deporte <- c(TRUE, TRUE, NA; FALSE, TRUE)
@@ -253,6 +273,26 @@ Obtener todos los valores de `deporte`, excepto la posición 4:
 deporte[-4]
 ```
 
+#### Vectorización de vectores
+Existen unas operaciones que se aplican a cada uno de los elementos. A este proceso
+se le conoce como **vectorización**.
+
+Las operaciones aritméticas y relacionales puden vectorizarse. Si la aplicamos a un vector,
+la operación se relizará em cada uno de los elementos contenidos.
+
+Por ejemplo, creamos un vector:
+```r
+vector <- c(2, 3, 6, 7, 8, 10, 11)
+```
+Al aplicar la operación aritmética, el resultado se aplica a cada elemento:
+```r
+vector + 2
+```
+Al aplicar operaciones relacionales, obtenemos un vector de `TRUE` y `FALSE`:
+```r
+vector > 7
+```
+
 ## Matrices
 Las matrices son arreglos rectangulares de filas y columnas con información numérica, alfanumérica
 o lógica. Para construir una matriz se usa la función `matrix()`. Por ejemplo, para crear una matriz
@@ -265,6 +305,16 @@ mimatriz = matrix(data=1:20, nrow=3, ncol=5, byrow=FALSE)
 **`nrow (fila), ncol (columna)`**: definen la dimensión de la matriz.
 
 **`byrow`**: indica si la información en `data` se debe ingresar en filas o no.
+
+**`cbind()`**: une vectores usando cada uno como columnas.
+
+**`rbind()`**: une vectores usando cada uno como filas.
+```r
+# usar cada vector como filas
+matriz <- rbind(vector1, vector2, vector3)
+# usar cada vector como columna
+matriz <- cbind(vector1, vector2, vector3)
+```
 
 #### Extrar elementos de una matriz
 Para acceder a los elementos dentro de una matriz se usan los corchetes `[]` y, dentro, separado por
@@ -289,6 +339,15 @@ mimatriz[, -c(2, 4)]
 Recuperar la matriz sin la fila 1 y la columna 3:
 ```r
 mimatriz[-1, -3]
+```
+La vectorización también se aplica a las matrices.
+
+La función `t()` permite transponer una matriz, es decir, rotatrla 90°.
+```r
+# matriz de 3 x 
+matriz <- matrix(1:6, nrow=3)
+# transponer
+matriz_t <- t(matriz)
 ```
 
 ## Arreglos
@@ -325,7 +384,18 @@ la función `data.frame()`.
 Por ejemplo, crear un marco de datos con los vectores `edad`, `deporte` y `comic_fav` definidos anteriormente.
 ```r
 mi_marco <- data.frame(edad, deporte, comic_fav)
+# crear un dataframe manual
+df1 <- data.frame(
+    "entero" = 1:4,
+    "factor" = c(letters[1:4]),
+    "numero" = c(1.2, 3.4, 4.5, 5.6),
+    "cadena" = as.character(c(letters[1:4]))
+# coercionar una matriz
+matriz <- matrix(1:24, ncol=4)
+df <- as.data.frame(matriz)
+class(df)
 ```
+Un dataframe también se puede vectorizar.
 
 #### Extraer elementos de un marco de datos (*dataframe*)
 Para recuperar la columnas en un *dataframe* se puede usar el operador `$` (frame$col_name [vector]),
@@ -441,6 +511,15 @@ matrix(data=c(edad, deporte, comic_fav), 3,5)
 # o crear un dataframe
 data.frame(edad, deporte, comic_fav)
 ```
+
+## Coerción en estructuras de datos
+También se puede usar la función `as()` en las estructuras de datos:
+
+Función | Coerciona a | Coerciona exitosamente 
+`as.vector()` | Vector | Matriz
+`as.matrix()` | Matriz | Vectores, Data frames
+`as.data.frame()` | Data frame | Vectores, Matrices
+`as.list()` | Lista | Vectores, Matrices, Data frames
 
 ## Guía de estilo
 
