@@ -157,8 +157,8 @@ En R tenemos los siguientes operadores aritméticos:
 Operador | Operación | Ejemplo | Resultado
 -|-|-|-
 `+` | Suma | `5 + 3` | 8
-`-` | Resta | `5 - 3` | 
-`*` | Multiplicación | `5 * 3` | 1
+`-` | Resta | `5 - 3` | 2
+`*` | Multiplicación | `5 * 3` | 15
 `/` | División | `5 / 3` | 1.666667
 `^` | Potencia | `5 ^ 3` | 125
 `%%` | División entera | `5 %% 3` | 2
@@ -174,7 +174,7 @@ Operador | Comparación | Ejemplo | resultado
 `<=` | Menor o igual que | `5 <= 3` | `FALSE`
 `>` | Mayor que | `5 > 3` | `TRUE`
 `>=` | Maypr o igual que | `5 >= 3` | `TRUE`
-`==` | Exactamente igual que `5 == 3` | `FALSE`
+`==` | Exactamente igual que | `5 == 3` | `FALSE`
 `!=` | No es igual que | `5 != 3` | `TRUE`
 
 Es posible comparar cualquier tipo de dato sin que resulte en error.
