@@ -133,16 +133,92 @@ Se puede usar la función `class()`.
 Función | Tipo que verifica
 -|-
 `is.integer()` | Entero
-`is.numeric` | Numérico
+`is.numeric()` | Numérico
 `is.character()` | Cadena de texto
 `is.factor()` | Factor
 `is.logical()` | Lógico
 `is.na()` | `NA`
-`is.null` | `NULL`
+`is.null()` | `NULL`
 
 Estas funciones toman como argumento un dato.
 
+## Operadores
+Los operadores son los símbolos que le indican a R que tarea relizar.
 
+Existen operadores específicos para cada tipo de tarea. Los operadores principales son:
+- Aritméticos
+- Relacionales
+- Lógicos
+- De asignación
+
+#### Operadores aritméticos
+En R tenemos los siguientes operadores aritméticos:
+
+Operador | Operación | Ejemplo | Resultado
+-|-|-|-
+`+` | Suma | `5 + 3` | 8
+`-` | Resta | `5 - 3` | 
+`*` | Multiplicación | `5 * 3` | 1
+`/` | División | `5 / 3` | 1.666667
+`^` | Potencia | `5 ^ 3` | 125
+`%%` | División entera | `5 %% 3` | 2
+
+Es posible realizas operaciones aritméticas con datos de tipo entero y numérico.
+
+#### Operadores relacionales
+Los operadores relacionales son usados para hacer comparaciones y devuelve `TRUE` o `FALSE`.
+
+Operador | Comparación | Ejemplo | resultado
+-|-|-|-
+`<` | Menor que | `5 < 3` | `FALSE`
+`<=` | Menor o igual que | `5 <= 3` | `FALSE`
+`>` | Mayor que | `5 > 3` | `TRUE`
+`>=` | Maypr o igual que | `5 >= 3` | `TRUE`
+`==` | Exactamente igual que `5 == 3` | `FALSE`
+`!=` | No es igual que | `5 != 3` | `TRUE`
+
+Es posible comparar cualquier tipo de dato sin que resulte en error.
+
+Sin embargo, al usar los operadores `>`, `>=`, `<` y `<=` con cadenas de texto, estos tienen un comportamiento especial.
+
+```r
+"casa" > "barco" # TRUE
+```
+La comparación se realiza en orden alfabético, por lo que "c" está antes de que "b".
+
+#### Operadores lógicos
+Los operadores lógicos son usados para operaciones de álgebra Booleana, es decir, para
+describir relaciones lógicas expresadas como `TRUE` o `FALSE`.
+
+Operador | Comparación | Ejemplo
+-|-|-
+`x | y` | x o y es verdadero | `TRUE | FALSE`
+`x & y` | x Y y son verdaderos | `TRUE & FALSE`
+`!x` | x no es verdadero (negación) | `!TRUE`
+`isTRUE(x)` | x es verdadero (afirmación) | `isTRUE(TRUE)`
+
+Los operadores `|` y `&` siguen estas reglas:
+- `|` devuelve `TRUE` si algunos de los datos es verdadero
+- `&` devuelve `TRUE` si ambos datos son verdaderos
+- `|` solo devuelve `FALSE` si ambos datos son falsos
+- `&` devuelve `FALSE` si alguno de los datos es falso
+
+Estos operadores pueden ser usados con datos del tipo numérico, lógico y complejo.
+
+#### Orden de operaciones
+
+Orden | Operadores
+-|-
+1 | `^`
+2 | `*` `/`
+3 | `+` `-`
+4 | `<` `>` `<=` `>=` `==` `!=`
+5 | `!`
+6 | `&`
+7 | `|`
+8 | `<-`
+
+Si deseamos que una operación ocurra antes que otra, rompiendo el orden, usamos paréntesis.
 
 ## Vectores
 Los vectores son arreglos ordenados en los cuakes se pueden almacenar información numérico
