@@ -192,7 +192,7 @@ describir relaciones lógicas expresadas como `TRUE` o `FALSE`.
 
 Operador | Comparación | Ejemplo
 -|-|-
-`x | y` | x o y es verdadero | `TRUE | FALSE`
+`x \| y` | x o y es verdadero | `TRUE | FALSE`
 `x & y` | x Y y son verdaderos | `TRUE & FALSE`
 `!x` | x no es verdadero (negación) | `!TRUE`
 `isTRUE(x)` | x es verdadero (afirmación) | `isTRUE(TRUE)`
