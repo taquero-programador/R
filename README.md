@@ -192,7 +192,7 @@ describir relaciones lógicas expresadas como `TRUE` o `FALSE`.
 
 Operador | Comparación | Ejemplo
 -|-|-
-`x \| y` | x o y es verdadero | `TRUE | FALSE`
+`x \| y` | x o y es verdadero | `TRUE \| FALSE`
 `x & y` | x Y y son verdaderos | `TRUE & FALSE`
 `!x` | x no es verdadero (negación) | `!TRUE`
 `isTRUE(x)` | x es verdadero (afirmación) | `isTRUE(TRUE)`
@@ -215,7 +215,7 @@ Orden | Operadores
 4 | `<` `>` `<=` `>=` `==` `!=`
 5 | `!`
 6 | `&`
-7 | `|`
+7 | `\|`
 8 | `<-`
 
 Si deseamos que una operación ocurra antes que otra, rompiendo el orden, usamos paréntesis.
