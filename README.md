@@ -31,7 +31,7 @@ names(obj) # retorna el nombre de las columnas del objeto
 
 ## Vignettes
 Los paquetes de R están obligados a incluir documentación sobre sus funciones y conjuntos de datos.
-Sin embargo, a veces es dificil entender la utilidad de un paquete...
+Sin embargo, a veces es difícil entender la utilidad de un paquete...
 
 ## Variables
 Ejemplos de cómo declarar variables:
@@ -46,11 +46,206 @@ nchar(pais) # retorna el número de letras en la variable
 pais # retorna el valor de la variable
 ```
 
+## Tipos de datos
+En R, los datos pueden ser de diferentes tipos. Cada tipo tiene características particulares
+que lo distinguen de los demás. Entre otras cosas, algunas operaciones solo se pueden
+realizar con tipos de datos específicos.
+
+#### Datos más comunes
+Los tipos de datos más común en R son los siguientes:
+Tipo | Ejemplo | Nombre en inglés
+-|-|-
+Entero | `1` | integer
+Numérico | `1.3` | numeric
+Cadena de texto | `"uno"` | character
+Factor | `uno` | factor
+Lógico | `TRUE` | logical
+Perdido | `NA` | NA
+Vacío | `NULL` | null
+
+Además de estos tipos, R también cuenta con datos numéricos complejos (con una parte real y
+una imaginaria), `raw` (bytes), fechas y raster, etc. Estos tipos tienen aplicaciones muy específicas,
+por ejemplo, los datos de tipo fechas son ampliamente usados en economía para analísis de series de tiempo.
+
+#### Entero y numérico
+Como su nombre lo indica, los datos enteros representan números enteros, sin una parte decimal o fraccionaria.
+
+Los datos numéricos representan números, a diferencia de los datos enteros es que tienen
+una parte decimal o fraccionaria.
+
+Los datos numéricos también son llamados *float* (flotante).
+
+#### Factor
+un factor es un tipo de datos específico de R. Puede ser descrito como un dato numérico
+representado por una etiqueta.
+
+Supongamos que tenemos un conjunto de datos que representa el sexo de personas encuestadas
+por teléfono, pero estos se encuentran capturados por los números `1` y `2`. El 1 corresponde a **femenino** y el 2 a **masculino**.
+
+Podemos indicar en consola y para otros analísis, que muestre los 1 como `femenino` y los 2 como `masculino`.
+
+Por último, cada una de las etiquetas o valores que pueden asumir un factor se conococen como **nivel**.
+En el caso de `femenino` y `masculino`, serían dos niveles.
+
+#### Lógico
+Los datos de tipo lógico solo tiene dos valores posibles: `TRUE` (verdadero) y `FALSE` (falso).
+
+#### `NA` y `NULL`
+En R, usamos `NA` para representar datos perdidos, mientras que `NULL` representa la ausencia de datos.
+
+La diferencia entre las dos es que, un dato `NULL` aparece solo cuando R intents recuperar un dato
+y no encuentra nada, mientras que `NA` es usado para representar explícitamente datos perdidos,
+omitidos o que por alguna razón son faltantes.
+
+## Coerción
+En R, los datos pueden ser cuercionados, es decir, forzados para ser transformados de un tipo a otro.
+
+La coerción es muy importante. Cuando pedimos a R relizar alguna operación, intentará coercionar
+de manera implícita, sin avisarnos, los datos de su tipo original al tipo correcto que permita relizarla.
+Habra ocasiones en las que R tenga éxito y la operación ocurra sin problemas, y otras en
+las que falle y obtengamos un error.
+
+La coerción de tipos se reliza de los datos más restrictivos a los más flexibles.
+
+Las coerciones ocurren en el siguiente orden:
+```r
+lógico -> entero -> numérico -> cadena de texto
+```
+
+#### Coerción explícita con `as()`
+
+Función | Tipo al que hace coerción
+-|-
+`as.integer()` | Entero
+`as.numeric()` | Numérico
+`as.character()` | Cadena de texto
+`as.factor()` | Factor
+`as.logical()` | Lógico
+`as.null()` | `NULL`
+
+Todas estas funciones aceptan como argumento datos o vectores.
+
+## Verificar el tipo de un dato
+Se puede usar la función `class()`.
+
+#### Verificar con la función `is()`
+
+Función | Tipo que verifica
+-|-
+`is.integer()` | Entero
+`is.numeric()` | Numérico
+`is.character()` | Cadena de texto
+`is.factor()` | Factor
+`is.logical()` | Lógico
+`is.na()` | `NA`
+`is.null()` | `NULL`
+
+Estas funciones toman como argumento un dato.
+
+## Operadores
+Los operadores son los símbolos que le indican a R que tarea relizar.
+
+Existen operadores específicos para cada tipo de tarea. Los operadores principales son:
+- Aritméticos
+- Relacionales
+- Lógicos
+- De asignación
+
+#### Operadores aritméticos
+En R, tenemos los siguientes operadores aritméticos:
+
+Operador | Operación | Ejemplo | Resultado
+-|-|-|-
+`+` | Suma | `5 + 3` | 8
+`-` | Resta | `5 - 3` | 2
+`*` | Multiplicación | `5 * 3` | 15
+`/` | División | `5 / 3` | 1.666667
+`^` | Potencia | `5 ^ 3` | 125
+`%%` | División entera | `5 %% 3` | 2
+
+Es posible realizas operaciones aritméticas con datos de tipo entero y numérico.
+
+#### Operadores relacionales
+Los operadores relacionales son usados para hacer comparaciones y devuelve `TRUE` o `FALSE`.
+
+Operador | Comparación | Ejemplo | resultado
+-|-|-|-
+`<` | Menor que | `5 < 3` | `FALSE`
+`<=` | Menor o igual que | `5 <= 3` | `FALSE`
+`>` | Mayor que | `5 > 3` | `TRUE`
+`>=` | Mayor o igual que | `5 >= 3` | `TRUE`
+`==` | Exactamente igual que | `5 == 3` | `FALSE`
+`!=` | No es igual que | `5 != 3` | `TRUE`
+
+Es posible comparar cualquier tipo de dato sin que resulte en error.
+
+Sin embargo, al usar los operadores `>`, `>=`, `<` y `<=` con cadenas de texto, estos tienen un comportamiento especial.
+
+```r
+"casa" > "barco" # TRUE
+```
+La comparación se realiza en orden alfabético, por lo que "c" está antes de que "b".
+
+#### Operadores lógicos
+Los operadores lógicos son usados para operaciones de álgebra Booleana, es decir, para
+describir relaciones lógicas expresadas como `TRUE` o `FALSE`.
+
+Operador | Comparación | Ejemplo
+-|-|-
+`x \| y` | x o y es verdadero | `TRUE \| FALSE`
+`x & y` | x Y y son verdaderos | `TRUE & FALSE`
+`!x` | x no es verdadero (negación) | `!TRUE`
+`isTRUE(x)` | x es verdadero (afirmación) | `isTRUE(TRUE)`
+
+Los operadores `|` y `&` siguen estas reglas:
+- `|` devuelve `TRUE` si algunos de los datos es verdadero
+- `&` devuelve `TRUE` si ambos datos son verdaderos
+- `|` solo devuelve `FALSE` si ambos datos son falsos
+- `&` devuelve `FALSE` si alguno de los datos es falso
+
+Estos operadores pueden ser usados con datos del tipo numérico, lógico y complejo.
+
+#### Orden de operaciones
+
+Orden | Operadores
+-|-
+1 | `^`
+2 | `*` `/`
+3 | `+` `-`
+4 | `<` `>` `<=` `>=` `==` `!=`
+5 | `!`
+6 | `&`
+7 | `\|`
+8 | `<-`
+
+Si deseamos que una operación ocurra antes que otra, rompiendo el orden, usamos paréntesis.
+
+## Estructura de datos
+Las estructuras de datos son objetos que contienen datos.
+
+Tabla con las principales estructuras de control en R.
+
+Dimensiones | Homogeneas | Heterogeneas
+-|-|-
+1 | Vector | Lista
+2 | Matriz | Data Frame
+3 | array |
+
 ## Vectores
 Los vectores son arreglos ordenados en los cuakes se pueden almacenar información numérico
 (variable cuantitativa), alfanumérico (variable cualitativa) o lógico (`TRUE` o `FALSE`), pero no
 mezclas de estos. La función en R para crear una vector es `c()` y que significa concatenar; dentro
 de los paréntesis de esta función se ubica la información a almacenar. Ejemplo:
+
+Verificar que el `3` es un vector:
+```r
+is.vector(3) # TRUE
+```
+Usar la función `length()` para conocer el largo de un vector:
+```r
+length(3)
+```
+
 ```r
 edad <- c(15, 19, 13, NA, 20)
 deporte <- c(TRUE, TRUE, NA; FALSE, TRUE)
@@ -79,6 +274,26 @@ Obtener todos los valores de `deporte`, excepto la posición 4:
 deporte[-4]
 ```
 
+#### Vectorización de vectores
+Existen unas operaciones que se aplican a cada uno de los elementos. A este proceso
+se le conoce como **vectorización**.
+
+Las operaciones aritméticas y relacionales puden vectorizarse. Si la aplicamos a un vector,
+la operación se relizará em cada uno de los elementos contenidos.
+
+Por ejemplo, creamos un vector:
+```r
+vector <- c(2, 3, 6, 7, 8, 10, 11)
+```
+Al aplicar la operación aritmética, el resultado se aplica a cada elemento:
+```r
+vector + 2
+```
+Al aplicar operaciones relacionales, obtenemos un vector de `TRUE` y `FALSE`:
+```r
+vector > 7
+```
+
 ## Matrices
 Las matrices son arreglos rectangulares de filas y columnas con información numérica, alfanumérica
 o lógica. Para construir una matriz se usa la función `matrix()`. Por ejemplo, para crear una matriz
@@ -91,6 +306,16 @@ mimatriz = matrix(data=1:20, nrow=3, ncol=5, byrow=FALSE)
 **`nrow (fila), ncol (columna)`**: definen la dimensión de la matriz.
 
 **`byrow`**: indica si la información en `data` se debe ingresar en filas o no.
+
+**`cbind()`**: une vectores usando cada uno como columnas.
+
+**`rbind()`**: une vectores usando cada uno como filas.
+```r
+# usar cada vector como filas
+matriz <- rbind(vector1, vector2, vector3)
+# usar cada vector como columna
+matriz <- cbind(vector1, vector2, vector3)
+```
 
 #### Extrar elementos de una matriz
 Para acceder a los elementos dentro de una matriz se usan los corchetes `[]` y, dentro, separado por
@@ -115,6 +340,15 @@ mimatriz[, -c(2, 4)]
 Recuperar la matriz sin la fila 1 y la columna 3:
 ```r
 mimatriz[-1, -3]
+```
+La vectorización también se aplica a las matrices.
+
+La función `t()` permite transponer una matriz, es decir, rotatrla 90°.
+```r
+# matriz de 3 x 
+matriz <- matrix(1:6, nrow=3)
+# transponer
+matriz_t <- t(matriz)
 ```
 
 ## Arreglos
@@ -151,7 +385,18 @@ la función `data.frame()`.
 Por ejemplo, crear un marco de datos con los vectores `edad`, `deporte` y `comic_fav` definidos anteriormente.
 ```r
 mi_marco <- data.frame(edad, deporte, comic_fav)
+# crear un dataframe manual
+df1 <- data.frame(
+    "entero" = 1:4,
+    "factor" = c(letters[1:4]),
+    "numero" = c(1.2, 3.4, 4.5, 5.6),
+    "cadena" = as.character(c(letters[1:4]))
+# coercionar una matriz
+matriz <- matrix(1:24, ncol=4)
+df <- as.data.frame(matriz)
+class(df)
 ```
+Un dataframe también se puede vectorizar.
 
 #### Extraer elementos de un marco de datos (*dataframe*)
 Para recuperar la columnas en un *dataframe* se puede usar el operador `$` (frame$col_name [vector]),
@@ -267,6 +512,16 @@ matrix(data=c(edad, deporte, comic_fav), 3,5)
 # o crear un dataframe
 data.frame(edad, deporte, comic_fav)
 ```
+
+## Coerción en estructuras de datos
+También se puede usar la función `as()` en las estructuras de datos:
+
+Función | Coerciona a | Coerciona exitosamente 
+-|-|-
+`as.vector()` | Vector | Matriz
+`as.matrix()` | Matriz | Vectores, Data frames
+`as.data.frame()` | Data frame | Vectores, Matrices
+`as.list()` | Lista | Vectores, Matrices, Data frames
 
 ## Guía de estilo
 
