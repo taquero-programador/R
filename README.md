@@ -435,6 +435,10 @@ parámetro `x` sirve para indicar el marco de datos, `subset` permite indicar un
 Acceder a todos los registros dentro del *dataframe* solo si `deporte` es `TRUE`:
 ```r
 subset(mi_marco, subset=deporte == TRUE)
+# similar a
+mi_marco[mi_marco$deporte == TRUE]
+# colocar una coma al final retorna las columnas
+mi_marco[mi_marco$deporte == TRUE, ]
 ```
 Obtener los valores cuando `edad` sea mayor o igual a `17`:
 ```r
@@ -722,4 +726,141 @@ La función `mean()` calcula el promedio:
 notas <- c(4.0, 1.3, 3.8, 2.0)
 mean(notas)
 ```
+Usar la función `with()` para extraer un subconjunto:
+```r
+with(mi_marco, mi_marco[edad >= 15 & deporte == TRUE, ]
+```
+#### Funciones sobre vectores
+En R podemos destacar las siguientes funciones básicas sobre vectores numéricos:
+- `min`: para obtener el mínimo de un vector
+- `max`: para obtener el máximo de un vector
+- `length`: para determinar la longitud de un vector
+- `range()`: obtener el rango de valores de un vector, entrega el mínimo y el máximo.
+- `sum`: entrega la suma de todos los elementos de los vectores
+- `prod`: multiplica todos los elementos del vector
+- `which.min`: retorna la posición en donde está el valor mínimo del vector
+- `which.max`: retorna la posición máxima del vector
+- `rev`: invierte un vector
 
+```r
+# crear un vector
+my_vect <- c(5, 3, 2, 1, 2, 0, NA, 0, 9, 6)
+min(my_vect) # no aparece el cero, sino NA
+min(my_vect, na.rm=TRUE) # na.rm remueve los NA
+max(my_vect, na.rm=TRUE) # retorna el valor máximo
+length(my_vect) # retorna el largo del vector
+range(my_vect, na.rm=TRUE) # retorna el mínimo y el máximo
+sum(my_vect, na.rm=TRUE) # retorna la suma de todos los elementos del vector
+which.min(my_vect) # retorna la posición del número mínimo
+which.max(my_vect) # posición del número máximo
+```
+
+#### Funciones matemáticas
+Algunas funciones básicas utilizadas en estadística son: `sin, cos, tan, asin, acos, atan, atan2,
+log, logb, log10, exp, sqrt, abs`.
+
+```r
+# ejemplos de medidas trigonométricas
+angulos <- c(0, pi/2, pi)
+sin(angulos)
+tan(angulos)
+# logaritmos
+log(100)
+log10(200)
+logb(100)
+# exponencial
+exp(1)
+exp(2)
+exp(1:3)
+# raices
+sqrt(49)
+27 ^ (1/3) # raíz cuadrada de 27
+# valor absoluto
+abs(2.5)
+abs(-3.6)
+```
+
+#### Función `seq`
+En R podemos crear secuencias de números de una forma sencilla con `seq()`, la sintaxis es:
+```r
+seq(from=1, to=1, by, length.out)
+```
+Los argumentos de la función son:
+- `from`: valor de inicio de la secuencia
+- `to`: valor final de la secuencia, no siempre se alcanza
+- `by`: incremento de la secuencia
+- `length.out`: longitud deseada de la secuencia
+
+```r
+# once valores igualmente espaciados desde 0 hasta 1
+seq(0, 1, length.out=11)
+# secuencia de 2 en 2 comenzando en 1
+seq(1,9,2)
+# desde el 1 con salto de pi sin pasar del 9
+seq(1,9,pi)
+# usar : para generar secuencias de rango
+2:8
+pi:6 # secuencia real
+6:pi # secuencia entera
+```
+
+#### Función `rep`
+La función `rep` permite crear repeticiones y la sintaxis es:
+```r
+rep(x, times=1, length.out=NA, each=1)
+```
+Los argumentos para esta función son:
+- `x`: vector con los elementos a repetir
+- `times`: número de veces que el vector `x` se debe repetir
+- `length.out`: longitud deseada para el vector resultante
+- `each`: número de veces que cada elemento de `x` se debe repetir
+
+```r
+# recrear las siguientes repeticiones
+# 12341234
+# 11223344
+# 112334
+# 11223344
+rep(1:4, times=2)
+rep(1:4, times=c(2,2,2,2))
+rep(1:4, times=c(2,1,2,1))
+rep(1:4, each=2)
+```
+
+#### Funciones `round`, `ceiling`, `floor` y `trunc`
+Estas cuatro funciones permiten modificar u obtener información de un número.
+
+- `round(x, digits)`: sirve para redonder un número según los dígitos indicados
+- `ceiling(x)`: entrega el mínimo entero mayor o igual que `x`
+- `floor(x)`: entrega el máximo entero menor o igual que `x`
+- `trunc(x)` entrega la parte enter de un número `x`
+
+```r
+x <- 5.34896 # número positivo elegido
+round(x, digits=3)
+ceiling(x) # retorna 6
+floor(x) # retorna 5
+trunc(x) # 5
+x <- -4.26589 # número negativo
+round(x, digits=3)
+ceiling(x) # retorna -4
+floor(x) # retorna -5
+trunc(x) # -5
+```
+
+#### Funciones `sort` y `rank`
+Las funciones `sort` y `rank` son útiles para ordenar elementos de un vector o para saber posiciones
+que ocuparían los elementos de un vector al ser ordenado. La estrucutra es la siguiente:
+```r
+sort(x, decreasing=FALSE)
+rank(x)
+```
+En `x` es para ingresar el vector y el parámetro `decreasing` sirve para indicar si el ordenamiento es
+de menor a mayor (por defecto) o de mayor a menor.
+
+```r
+x <- c(2, 3, 6, 4, 9, 5)
+sort(x)
+sort(x, decreasing=TRUE)
+rank(x)
+```
