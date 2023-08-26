@@ -864,3 +864,151 @@ sort(x)
 sort(x, decreasing=TRUE)
 rank(x)
 ```
+
+#### Más funciones
+```r
+# return solo funciona en las funciones
+suma <- function(x, y) {
+    resultado <- x + y
+    return(resultado)
+}
+# compactar
+suma <- function(x, y) {
+    return(x + y)
+}
+# compactar
+suma <- function(x, y) x + y
+# example1
+fun1 <- function() {
+    num <- runif(1)
+    veces <- 1
+    while(sum(num) < 3) {
+        veces <- veces + 1
+        num[veces] <- runif(1)
+    }
+    return(veces)
+}
+fun1() # prueba
+# example2
+fun2 <- function(cota=1) {
+    num <- runif(1)
+    while(sum(num) < cota) {
+        sum <- c(num, runif(1))
+    }
+    resultado <- list(vector=num, suma=sum(num), cantidad=length(num))
+    return resultado
+}
+fun2() # sin argumento
+fun2(cota=3)
+# example3
+# cat permite concatenar y presentarlos en pantalla
+media <- function(a, b) {
+    media <- (a + b) / 2
+    cat("El punto medio de los valores", a, "y", b, "ingresado es:", media)
+}
+media(a=-3, b=-1)
+```
+
+## Instrucciones de control
+```r
+# if
+sal <- 3500 # salario base por semana
+hlab <- 62 # horas laboradas por semana
+# condición
+if(hlab > 48) {
+    hora_extra <- hlab - 48
+    salario_extra <- hora_extra * 600
+    sal <- sal + salario_extra
+}
+sal # retorna el nuevo valor
+
+# if else
+# exampl
+if(condición) {
+    operación
+    operación
+    operación_final
+}
+else {
+    operación
+    operación
+    operación_final
+}
+
+# ifelse: cuando hay una sola condición para if y else
+x <- c(1:10)
+ifelse(x %% 2 == 0, "Es par", "Es impar")
+
+# for
+objeto <- 1:10
+for(i in objeto) {
+    print(i)
+}
+# otro ejemplo
+nrep <- 10
+n <- 100
+conteo <- numeric(nrep) # vector para almacenar el conteo
+for(i in 1:nrep) {
+    x <- runif(n=n, min=1, max=3)
+    conteo[i] <- sum(x >= 2.5)
+}
+conteo # retorna el resultado
+
+# while
+# usar sample para simular un lanzamiento
+resultados <- c("Cara", "Sol")
+sample(x=resultados, size=1)
+# ampliación usando while
+num.lanza <- 0
+num.caras <- 0
+historial <- NULL # vector vacío para historial
+while(num.caras < 5) {
+    res <- sample(x=resultados, size=1)
+    num.lanza <- num.lanza + 1
+    historial[num.lanza] <- res
+    if(res == "Cara") {
+        num.caras <- num.caras + 1
+    }
+}
+historial # retorna el historial
+num.lanza # retorna la cantidad de lanzamientos
+
+# repeat: repite una condición hasta que se cumpla
+x <- 3 # valor de inicio
+repeat {
+    print(x)
+    x <- x + 1
+    if(x == 8) {
+        break
+    }
+}
+# imprime el resultado hasta el 7
+
+# break interrumpe y next avanza
+# intereumpir cuando i sea igual a 3
+for(i in 1:10) {
+    if(1 == 3) {
+        break
+    }
+    print(i)
+}
+# con while
+numero <- 20
+while(numero > 5) {
+    if(numero == 15) {
+        break
+    }
+    print(i)
+    numero <- numero - 1
+}
+# next: permite saltarse una iteración en el bucle
+for(i in 1:4) {
+    if(i == 3) {
+        next
+    }
+    print(i)
+}
+# break es necesario para repeat
+```
+
+## Lectura de base de datos
