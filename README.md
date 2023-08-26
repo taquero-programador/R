@@ -4,7 +4,7 @@
 ```r
 (1:40) ^ 2
 ```
-Esto produce los números del 1 al 40 elevados al cuadrado. Cada línea viene precedida pro el ordinal
+Esto produce los números del 1 al 40 elevados al cuadrado. Cada línea viene precedida por el ordinal
 del primer valor de la línea en el conjunto de datos de salida. Por ejemplo, si una línea comienza
 con `[14]` eso indica que el primer valor en esa línea ocupa el puesto 14 de los valores que aparecen
 en la salida.
@@ -333,3 +333,138 @@ else {
     print('Lastima')
 }
 ```
+
+## Funciones en R
+La instalación base de R tiene suficientes funciones para que relicemos todas las tareas básicas
+de análisis de datos, etc.
+
+Sin embargo, es común que necesitemos realizar tareas para las que no existe una función
+específica.
+
+#### ¿Por qué necesitamos nuestras porpias funciones?
+Supongamos que tenemos un jefe que no ha pedido un histograma con datos de edad que hemos recogido
+en un encuestas.
+
+Esto es sencillo de resolver con la función `hist()`. Solo tenemos que pasar un vector numérico como
+argumento para generar una gráfica.
+
+Primero, generaremos datos aleateorios de una distribució normal con la función `rnomr()`. Esta
+función tiene los siguientes argumentos:
+- `n`: cantidad de números a generar
+- `mean` media de la distribución de la que sacaremos los números
+- `sd`: desviación estándar de la distribución para sacar los números
+
+Además, llamaremos a `set.seed()` para que estos resultados sean replicantes. Cada que llamamos a
+`rnomr()` se generar números aleateorios diferentes, pero si antes llamamos a `set.seed()` con un
+número específico como argumento obtendremos los mismos resultados.
+```r
+# obtener 1500 números con media 15 y desviación estándar de .75
+set.seed(173)
+edades <- rnomr(n=1500, mean=15, sd=.75)
+# ver los primeros 10 números del objeto
+edades[1:10]
+# generar la gráfica
+hist(x=edades)
+```
+Podemos calcular la media de los datos con la función `mean()`, la desviación estándar con `sd()`, y
+podemos agregar los resultados de este calculo al histograma usando `abline()`.
+```r
+# calcular la media y desviación
+media <- mean(edades)
+des_est <- sd(edades)
+# rojo para la media y azúl para la desviación
+hist(edades, main="Edades", xlab="Datos", ylba="Frecuencia", col="gold")
+abline(v=media, col="red")
+abline(v=media + (des_est *c(1, -1)), col="blue")
+```
+
+#### Funciones definidas por el usuario
+Una función tiene nombre, argumentos y un cuerpo. Las funciones definidas por el usuario tiene
+la siguiente estructura:
+```r
+nombre <- function(argumentos) {
+    operaciones
+}
+```
+Los argumentos pueden ser datos, estrucutras de datos, conexiones a archivos u otras funciones y
+deben tener nombres diferentes.
+
+#### Nuestra primera función
+Función para calcular el área de un cuadrilátero: `lado x lado`.
+
+```r
+area_cuad <- function(lado1, lado2) {
+    lado1 * lado2
+}
+# llamar a la función para ejecutarla
+area_cuad(4,6)
+```
+Función para calcular el volumen de un prisma rectangular:
+```r
+area_prisma <. function(arista1, arista2, arista3) {
+    arista1 * arista2 * arista3
+}
+# ejecutar la función
+area_prisma(3, 6, 9)
+```
+Escribir otra función aprovechando la función `area_cuad`:
+```r
+area_prisma <- function(arista1, arista2, arista3) {
+    area_cuad(arista1, arista2) * arista3
+}
+# probar la función
+area_prisma(3,6,9)
+```
+
+#### Definiendo la función `crear_histograma()`
+Definiremos una función con el nombre `crear_histograma()` para generar un gráfica con las
+especificaciones que se nos han pedido.
+
+Partimos de una función sin argumentos y el cuerpo vacío:
+```r
+crear_histograma <- function() {
+
+}
+```
+Para esta función necesitaremos:
+- Los datos que serán graficados
+- El nombre de la variable graficada
+
+Por lo tanto, nuestros argumentos serán:
+- `datos`
+- `nombre`
+
+```r
+crear_histograma <- function(datos, nombre) {
+    media <- mean(datos)
+    des_est <- sd(datos)
+
+    hist(datos, main=nombre, xlab="Datos", ylab="Frecuencia", col="gold")
+    abline(v=media), col="red"
+    abline(v=media + (des_est * c(1, -1)), col="blue")
+}
+# generar datos
+ingreso = rnomr(1500, mean=15000, sd=45000)
+crear_histograma(ingreso, "Ingreso")
+```
+Ampliación de la función:
+```r
+crear_histograma <- function(datos, nombre) {
+    media <- mean(datos)
+    des_est <- sd(datos)
+    mediana <- median(datos)
+
+    hist(datos, main=nombre, xlab="Datos", ylab="Frecuencia", col="orange")
+    abline(v=media, col="red")
+    abline(v=media + (des_est * c(1, -1)), col="blue")
+    abline(v=mediana, col="greeen")
+}
+# ejecutar función
+crear_histograma(peso, "Peso con mediana")
+```
+La función `mean()` calcula el promedio:
+```r
+notas <- c(4.0, 1.3, 3.8, 2.0)
+mean(notas)
+```
+
