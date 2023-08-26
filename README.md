@@ -1012,3 +1012,20 @@ for(i in 1:4) {
 ```
 
 ## Lectura de base de datos
+Cómo leer bases de datos externas en R.
+
+#### Función `read.table`
+La función `read.table()` permite leer bases de datos en R.
+
+La sintaxis es la siguiente:
+```r
+read.table(file, header, sep, dec)
+```
+Los argumentos para `read.table()` es:
+- `file`: nombre o ruta de los datos. url o path loca
+- `file.choose()`: permite abrir una ventana para seleccionar el archivo
+- `header`: valor Lógico, se usa `TRUE` si la primera línea son encabezado
+- `sep`: tipo de separador en los datos
+- `dec`: símbolo con el cual están indicados los decimales
+
+
