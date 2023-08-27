@@ -425,6 +425,8 @@ mi_marco[c(2,1)]
 Para obtener las posiciones de 2 hasta la 4 de la columna `edad`:
 ```r
 mi_marco[2:4, 1]
+# or
+mi_marco[c(1,2), c("edad")]
 ```
 
 #### Extraer subconjuntos de un marco de datos
