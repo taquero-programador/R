@@ -1,0 +1,6 @@
+"edad","deporte","comic_fav"
+"1",15,TRUE,NA
+"2",19,TRUE,"Superman"
+"3",13,NA,"Batman"
+"4",NA,FALSE,NA
+"5",20,TRUE,"Batman"

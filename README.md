@@ -486,6 +486,7 @@ Para acceder a la matriz almanecada con el nombre de `E2` dentro del objeto `mi_
 ```r
 mi_lista$E2
 mi_lista[[2]] # indicar la posición del objeto en lugar del nombre
+mi_lista$E2[1,] # fila 2 y todas las columnas [fila, columna] or [1:3,]
 ```
 Usemos `class()` para ver la diferencia entre estos dos objetos:
 ```r
@@ -998,7 +999,7 @@ while(numero > 5) {
     if(numero == 15) {
         break
     }
-    print(i)
+    print(numero)
     numero <- numero - 1
 }
 # next: permite saltarse una iteración en el bucle
@@ -1026,6 +1027,104 @@ Los argumentos para `read.table()` es:
 - `file.choose()`: permite abrir una ventana para seleccionar el archivo
 - `header`: valor Lógico, se usa `TRUE` si la primera línea son encabezado
 - `sep`: tipo de separador en los datos
+- `col.name`: un vector opcional, con los nombres de las columnas en la tabla
+- `stringAsFactors`: esta función convierte automáticamente los datos de texto a factores
 - `dec`: símbolo con el cual están indicados los decimales
 
+```r
+# leer archivo CSV
+datos <- read.table(file="base1.csv", header=TRUE, sep=",")
+# read.csv: acepta los mismos parámetros que read.table, pero en la mayoria de los casos
+# solo requiera la ruta del archivo
+datos <- read.csv("base1.csv")
+# leer archivo TXT con separador
+datos <. read.table(file="base1.txt", header=TRUE, sep=" ")
+# leer archivo TXT con tabuladores \t
+datos <- read.table(file="base2.txt", header=TRUE, sep="\t")
 
+# leer una base de datos desde una URL
+url <- 'https://raw.githubusercontent.com/fhernanb/datos/master/aptos2019'
+datos <- read.table(file=url, header=TRUE)
+
+# descargar datos con download.file()
+download.file(
+url = 'url',
+destfile = "nombre del archivo para guardar"
+mode = "wb" # asegura que el archivo se descargue correctament
+)
+readLines("BD_Excel.xlsx", n=5) # retorna error porque no es una tabla rectangular
+file.show("BD_Excel.xlxs") # abre el archivo
+excel_sheets("BD_Excel.xlsx") # nombre de las pestañas como vector
+```
+
+#### Leer archivo Excel
+Algunas veces los datos están disponibles en un arcvhivo estándar de Excel, y dentro de cada
+archivo hojas con la información a utilizar. En estos casos se recomienda usar el paquete
+**readxl** y en particular `readxl`.
+
+`read_execl()` tiene los siguientes argumentos:
+- `path`: la ruta del archivo, por defecto es el directorio actual
+- `sheet`: nombre de la pestaña a importar. Si no se especifica, se leera la primera hoja
+- `range`: cadena de texto con el rango de celdas a importar. Por ejemplo: "A1:B10"
+- `col.names`: recibe un vector con los nombres para las columnas. Por defecto es `TRUE`. En caso de no tener encabezado, se puede usar esta función.
+
+```r
+# instalar el paquete readxl
+install.packages("readxl")
+library(readxl)
+hijos <- read_excel("BD_Excel.xlsx", sheet="Hijos")
+as.data.frame(hijos)
+padres <- read_excel("BD_Excel.xlsx", sheet="Padres")
+as.data.frame(padre)
+# es posible usar head() y tail()
+head(padres)
+head(padre, 4) # las primeras 4 líneas
+```
+
+## Exportar datos
+Un paso muy importante en el trabajo con R es exportar los datos que hemos generado.
+
+#### Data Frames y matrices
+Si nuestros datos se encuentran contenidos en una estructura de datos rectangular, podemos
+exportarlos con diferentes funciones.
+
+La función `write.table()` nos permite exportar matrices o data frames, como archivos de texto con
+distintas extensiones.
+
+Los argumentos más usados de `write.table()` son:
+- `x`: el nombre del data frame o matriz a exportar
+- `file`: nombre, extensión y ruta del archivo a guardar. Si se omite, se crear en el directorio actual
+- `sep`: delimitador
+- `row.names`: para incluir el nombre de los renglones, usar `TRUE`. Se recomienda fijar `FALSE`
+- `col.names`: para incluir el nombre de las columnas, establecer en `TRUE`
+
+```r
+# exportar a TXT
+write.table(mi_marco, "salida.txt", sep=",", col.names=TRUE)
+# leer para ver el resultado
+read.table("salida.txt", header=TRUE, sep",")
+# para el caso de CSV está write.csv()
+write.csv(mi_marco, "salida.csv", row.names=FALSE) # los nombres de columnas van por defecto
+```
+
+#### Listas
+La forma más sencilla de exportar listas es en un archivo RDS. Este es un tipo de archivo nativo
+de R que puede almacenar cualquier objeto a un archivo en nuestro disco.
+
+Además, RDS comprime los datos que almacena, por lo que ocupa menos espacio en disco.
+
+Para esto usamos la función `saveRDS()` la cual pide dos argumentos:
+- `object`: el nombre del objeto a exportar
+- `file`: nombre y ruta del archivo a guardar. Los archivos deben tener la extensión `.rds`
+
+```r
+# crear una lista con dos vectores y dos matrices
+mi.lista <- list("a"=c(TRUE, FALSE, TRUE),
+"b"=c("a", "b", "c",
+"c"=matrix(1:4, ncol=2),
+"d"=matrix(1:6, ncol=3)))
+# guardar el objeto
+saveRDS(object=mi.lista, file="mi_lista.rds")
+# para leer un archivo RDS, usar la función readRDS() con la ruta del archivo
+mi.lista.import <- readRDS("mi_lista.rds")
+```
