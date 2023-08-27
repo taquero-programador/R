@@ -1128,3 +1128,27 @@ saveRDS(object=mi.lista, file="mi_lista.rds")
 # para leer un archivo RDS, usar la función readRDS() con la ruta del archivo
 mi.lista.import <- readRDS("mi_lista.rds")
 ```
+
+#### Datos de paquetes estadísticos comerciales (SPSS, SAS, STATA)
+En Psicología el paquete SPSS Statistic de IBM  es el paquete estadístico más usado (archivos `.sav`).
+
+```r
+# instalar el paquete "haven"
+install.packages("haven")
+library(haven)
+```
+Todas estas funciones nos piden como argumento la ruta y el nombre del archivo
+
+- `read_spss()`: SPSS Statistic, archivos con extensión sav, zsav y por
+- `read_sav()`: SPSS Statistic, solo archivos sav y zsav
+- `read_sas()`: SAS, archivos sas7bda
+- `read_xpt()`: SAS, archivos xpt
+- `read_stata()`: Stata, archivos dta
+
+Todos importan los datos como un data frame.
+
+Para exportar:
+- `write_sav()`: SPSS Statistic. archivos sav, zsav o por
+- `write_sas()`: SAS, archivos sas7bda
+- `write_xpt()`: SAS, archivps xpt
+- `write_dta()`: Stata, archivos dta
