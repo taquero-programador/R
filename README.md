@@ -1205,8 +1205,11 @@ prop.table(x, margin=NULL)
 
 ```r
 # tabla de frecuencia relativa de una vía
-# generar tabla1
-propr.table(x=tabla1) # tabla1 es fuma
+# generar tabla1: table() es el equivalente a una tabla dinámica
+tabla1 <- table(fuma, exclude=c('Hola', 'hola', 'Casa', NA))
+propr.table(x=tabla1)
+# crear tabla2
+tabla2 <- table(sexo, fuma, exclude=c('Hola', 'hola', 'Casa', NA))
 # tabla de frecuencia relativa de dos vías
 tabla3 <- prop.table(x=tabla2)
 # por columnas
@@ -1234,7 +1237,7 @@ Construir tablas de frecuencia para variables cuantitativas es necesario en much
 procedimientos estadísticos, la función `hist()` sirve para obtener este tipo de
 tablas.
 ```r
-hist(x, breakes='Sturges', include.lowest=TRUE, right=TRUE, plot=FALSE)
+hist(x, breaks='Sturges', include.lowest=TRUE, right=TRUE, plot=FALSE)
 ```
 Los parámetros son:
 - `x`: vector numéricos
@@ -1253,4 +1256,11 @@ res1 # es una lista
 # para obtener las frecuencias de tres intervalos con límites 150, 170, 180 y 190, se especifica en breaks
 res2 <- hist(x=x, plot=FALSE, breaks=c(150, 170, 180, 180)
 res2 # retorna una lista
+# res3
+x <- c(1.1, 1.2, 1.3, 2.0, 2.0, 2.5, 2.7, 3.0, 3.4)
+res3 <- hist(x=x, breaks=c(1, 2, 3, 4), right=TRUE, polot=FALSE)
+res3[1:2]
+res4 <- hist(x, breaks=c(1, 2, 3, 4), right=FALSE, plot=FALSE)
+res5 <- hist(x, breaks=c(1, 2, 3, 4), include.lowest=FALSE, right=FALSE, plot=FALSE)
+res5[1:2]
 ```
