@@ -1154,3 +1154,103 @@ Para exportar:
 - `write_sas()`: SAS, archivos sas7bda
 - `write_xpt()`: SAS, archivps xpt
 - `write_dta()`: Stata, archivos dta
+
+## Tablas de frecuencia
+Las tablas de frecuencia son muy utilizadas en estadística y R permite crear tablas de
+una forma sencilla.
+
+#### Tabla de contingencia con `table`
+La función `table()` sirve para construir tablas de frecuencia de una vía. A continuación la estructura de la función:
+```r
+table(..., exclude, useNA)
+```
+Los parámetros de la función son los siguientes:
+- `...`: para ubicar los nombres de los objetos (variables o vectores)
+- `exclude`: vector con los niveles a remover de la tabla. `exclude=NULL` implica que se desea ver los `NA`, lo que equivale a `useNA='always'`.
+- `useNA`: Hay tres posibles opciones para este parámetro; `'no'` si no desea usar, `'ifany'` y `always` si se desea incluir.
+
+```r
+# tabla de frecuencia de una vía
+# construir un vector fuma para crear tabla de frecuencias absolutas para los niveles
+# de la variable frecuencia de fumar
+fumar <- c('Frecuente', 'Nunca', 'A veces', 'A veces', 'A veces', 'Nunca', 'Frecuente', NA, 'Frecuente', NA,
+'hola', 'Nunca', 'Hola', 'Frecuente', 'Nunca')
+# crear la tabla de frecuencia
+table(fuma)
+# lo anterior no muestra el conteo de los NA, para obtenerlos
+table(fuma, useNA='always')
+# hay dos niveles errados, hola y Hola. Para construir sin esos niveles
+table(fuma, exclude=c('Hola', 'hola')
+# ahora sin los valores errados y NA
+table(fuma, exclude=c('Hola', 'hola', NA))
+
+# tabla de frecuencia de dos vías
+sexo <- c('Hombre', 'Hombre', 'Hombre', NA, 'Mujer', 'Casa',
+'Mujer', 'Mujer', 'Mujer', 'Hombre', 'Mujer', 'Hombre',
+'Hombre', NA, 'Mujer', 'Mujer')
+# tabla de dos vías
+table(sexo, fuma)
+# retirar los valores errados de ambos vectores
+tabla2 <- table(sexo, fuma, exclude=c('Hola', 'hola', 'casa', NA))
+```
+
+#### Función `prop.table()`
+La función `prop.table()` se utiliza para crear tablas de frecuencia relativa a partir
+de tablas de frecuencia absoluta, la estructura de la función es la siguiente:
+```r
+prop.table(x, margin=NULL)
+```
+- `x`: tabla de frecuencia
+- `margin`: 1 para proporciones en filas, 2 para columnas, `NULL` si desea frecuencias globales
+
+```r
+# tabla de frecuencia relativa de una vía
+# generar tabla1
+propr.table(x=tabla1) # tabla1 es fuma
+# tabla de frecuencia relativa de dos vías
+tabla3 <- prop.table(x=tabla2)
+# por columnas
+table4 <- prop.table(x=tabla2, margin=2)
+```
+
+#### Función `addmargins`
+Esta función se puede utilizar para agregar los totales por filas o columnas a una
+tabla de frecuencia absoluta o relativa. La estructura es:
+```r
+addmargins(A, margin)
+```
+
+- `A`: tabla de frecuencia
+- `margin`: 1 para columnas, 2 para filas, `NULL` frecuencias globales
+
+```r
+# tabla3 y tabla 4 con totales margines global y por columna
+addmargins(tabla3)
+addmargins(tabla4, margin=1)
+```
+
+#### Función `hist`
+Construir tablas de frecuencia para variables cuantitativas es necesario en muchos
+procedimientos estadísticos, la función `hist()` sirve para obtener este tipo de
+tablas.
+```r
+hist(x, breakes='Sturges', include.lowest=TRUE, right=TRUE, plot=FALSE)
+```
+Los parámetros son:
+- `x`: vector numéricos
+- `breaks`: vector con los límites de los intervalos. Si no se especifica, se usara la regla de Sturges para definir el número de intervalos y en ancho
+- `include.lowest`: valor lógico, `TRUE` una observación xi que coincida con un límite de intervalo será ubicado en el intervalo izquierdo, `FALSE` será ubicado a la derecha
+- `right`: valor lógico, `TRUE` los intervalos serán cerrados a la derecha, `FALSE` abiertos a la derecha
+- `plot`: valor lógico, `FALSE` solo se obtiene la tabla de frecuencias, mientras que `TRUE` se obtiene la representacióm gráfica (histograma)
+
+```r
+# generar 200 observaciones aleateorias de una distribución normal con media 170 y desviación de 150.
+# construir tabla de frecuencia, una para Sturges y otra con 3 intervalos límites 150, 170, 180, 190
+x <- rnorm(n=200, mean=170, sd=5)
+res1 <- hist(x=x, breaks='Sturges', plot=FALSE)
+res1 # es una lista
+
+# para obtener las frecuencias de tres intervalos con límites 150, 170, 180 y 190, se especifica en breaks
+res2 <- hist(x=x, plot=FALSE, breaks=c(150, 170, 180, 180)
+res2 # retorna una lista
+```
