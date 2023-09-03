@@ -1264,3 +1264,54 @@ res4 <- hist(x, breaks=c(1, 2, 3, 4), right=FALSE, plot=FALSE)
 res5 <- hist(x, breaks=c(1, 2, 3, 4), include.lowest=FALSE, right=FALSE, plot=FALSE)
 res5[1:2]
 ```
+
+## Medidas de tendencia central
+```r
+url <- 'https://raw.githubusercontent.com/fhernanb/datos/master/medidas_cuerpo'
+datos <- read.table(url, header=TRUE)
+head(datos)
+```
+
+#### Media
+Para calcular la media de una variable cuantitativa se utiliza la función `mean()`.
+La sintaxis es la siguiente:
+```r
+mean(x, na.rm=FALSE)
+```
+`x` representa el objeto a usar, el parámetro `na.rm` es un valor lógico que
+en caso de ser `TRUE`, no devuelve los valores `NA`, por defecto es `FALSE`.
+
+```r
+# obtener la altura media de los estudiantes
+mean(x=datos$altura) # 171.5556
+# altura media por sexo
+# split permite dividir por niveles del vector
+# luego a cada uno se le aplica la función mean junto a sapply o tapply
+sapply(split(x=datos$altura, f=datos$sexo), mean) # cambiar sapply por tapply para ver la diferencia
+
+edad <- c(18, 23, 26, 32, NA, 32, 29)
+mean(edad) # error por los NA
+mean(edad, na.rm=TRUE)
+```
+
+#### Mediana
+Para calcular la mediana de una medida cuantitativa se utiliza la función `median()` y acepta
+los mismos parámetros que `mean`.
+```r
+# calcular la mediana de los estudiantes
+median(x=datos$edad)
+# usar quantile e indicar que se desea el cuantil 0.5
+quantile(x=datos$edad, probs=0.5)
+```
+
+#### Moda
+La moda de una variable cuantitativa corresponde a los valores que más se repiten, una forma
+sencilla de encontrar la moda es construir una tabla de frecuencia.
+```r
+# construir la tabla de frecuencia
+tabla <- table(datos$edad)
+# ordenar la table
+sort(tabla, decreasing=TRUE)
+```
+
+#### Medidas de variabilidad
