@@ -279,7 +279,7 @@ Existen unas operaciones que se aplican a cada uno de los elementos. A este proc
 se le conoce como **vectorización**.
 
 Las operaciones aritméticas y relacionales puden vectorizarse. Si la aplicamos a un vector,
-la operación se relizará em cada uno de los elementos contenidos.
+la operación se relizará en cada uno de los elementos contenidos.
 
 Por ejemplo, creamos un vector:
 ```r
@@ -471,7 +471,7 @@ Las listas son otro tipo de objeto muy usado para almacenar objetos de diferente
 para crear una lista es `list()`.
 
 Para crear una lista que contenga tres objetos: un vector con 5 números de nombre `mi_vector`, una
-matriz de dimensiión 6x4 de 12 números positivos llamada `mi_matriz2` y el *dataframe* `mi_marco`.
+matriz de dimensión 6x4 de 12 números positivos llamada `mi_matriz2` y el *dataframe* `mi_marco`.
 ```r
 set.seed(12345)
 mi_vector <- runif(n=5)
@@ -648,7 +648,7 @@ nombre <- function(argumentos) {
     operaciones
 }
 ```
-Los argumentos pueden ser datos, estrucutras de datos, conexiones a archivos u otras funciones y
+Los argumentos pueden ser datos, estructuras de datos, conexiones a archivos u otras funciones y
 deben tener nombres diferentes.
 
 #### Nuestra primera función
@@ -853,7 +853,7 @@ trunc(x) # -5
 
 #### Funciones `sort` y `rank`
 Las funciones `sort` y `rank` son útiles para ordenar elementos de un vector o para saber posiciones
-que ocuparían los elementos de un vector al ser ordenado. La estrucutra es la siguiente:
+que ocuparían los elementos de un vector al ser ordenado. La estructura es la siguiente:
 ```r
 sort(x, decreasing=FALSE)
 rank(x)
@@ -1314,4 +1314,136 @@ tabla <- table(datos$edad)
 sort(tabla, decreasing=TRUE)
 ```
 
-#### Medidas de variabilidad
+## La familia apply
+La familia de funciones `apply` es usada para aplicar una función a cada elemento
+de una estructura de datos. En particulat, es usada para aplicar funciones en matrices,
+data frames, arrays y listas.
+
+Con esta familia de funciones podemos automatizar tareas complejas usando pocas
+líneas de código y es una de las características distintivas en R.
+
+La familia de funciones `apply` es una expresión de los rasgos del paradigma funcional
+de programación presentes en R.
+
+#### Un recordatorio sobre vectorización
+Para entender más fácilmente el uso de la familia `apply`, recordaremos la vectorización de operaciones.
+
+Hay operaciones que, si las aplicamos a un vector, son aplicados a todos sus elementos.
+```r
+mi_vector <- 1:10
+mi_vector
+mi_vector ^ 2
+```
+Lo anterior es, generalmente, preferible a escribir una operación para cada elemento
+o a usar un bucle `for`.
+
+Como todo lo que ocurre en R es una funciona, podemos decir que al vectorizar estamos aplicando una función a cada elemento de un vector.
+
+#### Las funciones de la familia `apply`
+La familia `apply` está formada por las siguientes funciones:
+- `apply()`
+- `eapply()`
+- `lapply()`
+- `mapply()`
+- `rapply()`
+- `sapply()`
+- `tapply()`
+- `vapply()`
+
+Es una familia numerosa, y esta variedad de funciones se debe a que varias de ellas tienen
+aplicaciones sumamente específicas.
+
+Todas las funciones de esta familia tienen una característica en común: reciben como argumentos
+a un objeto y al menos una función.
+
+Las funciones de la familia `apply` tienen la particularidad que pueden recibir
+a otra función como argumento.
+
+Trabajaremos sobre las funciones más generales y de uso común de esta familia:
+- `apply()`
+- `lapply()`
+
+Estas dos funciones nos permitirán solucionar casi todos los problemas a los que nos encontremos. Además,
+conociendo su uso, las demás funciones de la familia `apply` serán relativamente fáciles de entender.
+
+#### `apply`
+`apply` aplica una función a todos los elementos de una matriz.
+
+La estructura de esta función es la siguiente:
+```r
+apply(x, MARGIN, fun)
+```
+Tiene tres argumentos:
+- `x`: una matriz o un objeto que pueda coercionarse a una matriz, generalmente, un data frame.
+- `MARGIN`: la dimensión que agrupará los elementos de una matriz `x`, para aplicarles una función. Son indentificados xon números, 1 son los renglones y 2 son columnas.
+- `FUN`: la función que aplicaremos a la matriz `x` en su dimensión `MARGIN`.
+
+#### ¿Qué es `x`?
+`x` es una matriz o cualquier otro objeto que sea posible coercionar a una matriz.
+Esto es, principalmente, vectores y data frames.
+
+Se pueden coercionar objetos a matriz usando `as.matrix()` y se puede comprobar si
+un objeto es de esta clase con `is.matrix()`.
+```r
+# creamos un data frame
+df <- data.frame(v1=1:3, v2=4:6)
+df # check
+# coerción a matriz
+mi_matriz <- as.matrix(df)
+# verificar que sea matriz
+is.matrix(mi_matriz)
+# resultado mi_matriz
+mi_matriz
+```
+Aunque también podemos coercionar listas y arrays a matrices, los resultados que obtenemos
+no siempre son apropiados para `apply()`, por lo que no es recomendable usar estos
+objetos como argumentos.
+
+#### ¿Qué es `MARGIN`?
+Recuerda que las matrices y los data frames están formados por vectores y que estas
+estructuras tienen dos dimensiones, ordenadas en filas y columnas.
+
+Para `MARGIN`:
+- 1 es renglón
+- 2 es columna
+
+Por ejemplo, podemos usar `apply()` para obtener la sumatoria de los elementos de una matriz, por renglón.
+
+```r
+# crear una matriz de cuatro renglones
+matriz <- matrix(1:14, nrow=4)
+# usar apply(), dando la función sum() sin paréntesis
+apply(X = matriz, MARGIN = 1, FUN = sum)
+# esto es equivalente a
+sum(matriz[1, ]) # aumentando hasta completar todos los renglo es
+```
+Si cambiamos el argumento `MARGIN` a 2, entonces la función se aplicara por columna.
+```r
+apply(X = matriz, MARGIN = 2, FUN = sum)
+```
+
+#### ¿Qué es `FUN`
+`FUN` es un argumento que nos pide el nombre de una función se aplicara a todos los elementos de una matriz.
+
+Podemos dar como argumento cualquier nombre de función, siempre y cuando esta función
+acepte vectores como argumentos.
+```r
+# usar mean() para obtener la media por renglón y columna
+apply(matriz, 1, mean) # renglones
+apply(matriz, 2, mean) # columnas
+
+# las siguientes llamadas se ejecutan sin necesidad de especificar argumentos
+apply(matriz, 1, FUN = sd) # desviación estándar
+apply(matriz, 1, FUN = max) # máximo
+apply(matriz, 1, FUN = quantile) # cuantiles
+```
+
+#### ¿Cómo sabe `FUN` cuáles son sus argumentos?
+Recuerda que podemos llamar a una función y proporcionar sus argumentos en orden, tal como fueron
+establecidos en su definición.
+
+Por lo tanto, el primer argumento que espera la función, será la `x` de `apply()`.
+
+`quantile()` espera siempre un argumento `x`, además, tiene varios argumentos adicionales:
+- `probs`: es un vector numérico con las probabilidades de las qu ñe queremos extraer cuantiles.
+- `na.rm`: si le asignamos `TRUE` quitará `NA` y `NaN` antes de realizar operaciones.
